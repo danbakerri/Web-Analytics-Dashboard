@@ -1,6 +1,6 @@
 # CCRI Web Analytics — SQL Portfolio Project
 
-A simulated higher education web analytics database built with **SQLite** and **Python**, inspired by real GA4/Search Console data patterns. Includes a standalone HTML dashboard.
+A simulated higher education web analytics database built with **SQLite** and **Python**, inspired by real GA4/Search Console data patterns. Includes a standalone HTML dashboard. Check out the finished project here https://danbakerri.github.io/Web-Analytics-Dashboard/
 
 > Built as a SQL learning project. Data is synthetic and CCRI-themed.
 
@@ -96,18 +96,18 @@ open dashboard/index.html   # macOS
 
 See [`queries/example_queries.sql`](queries/example_queries.sql) for 10 queries including:
 
-| # | Query |
-|---|-------|
-| 1 | Top 10 pages by sessions with bounce rate |
-| 2 | Traffic by source / medium |
-| 3 | Sessions by device type |
-| 4 | Sessions by campus |
-| 5 | Weekly session trend (last 12 weeks) |
-| 6 | Top conversion events |
-| 7 | Admissions funnel page analysis |
-| 8 | Site section breakdown |
-| 9 | Best organic search pages |
-| 10 | High-bounce pages with significant traffic |
+| #   | Query                                      |
+| --- | ------------------------------------------ |
+| 1   | Top 10 pages by sessions with bounce rate  |
+| 2   | Traffic by source / medium                 |
+| 3   | Sessions by device type                    |
+| 4   | Sessions by campus                         |
+| 5   | Weekly session trend (last 12 weeks)       |
+| 6   | Top conversion events                      |
+| 7   | Admissions funnel page analysis            |
+| 8   | Site section breakdown                     |
+| 9   | Best organic search pages                  |
+| 10  | High-bounce pages with significant traffic |
 
 Run any query against the DB:
 
@@ -143,13 +143,13 @@ The `dashboard/index.html` file is a self-contained HTML file that reads `data.j
 
 ## Simulated data details
 
-| Entity | Count |
-|--------|-------|
-| Pages | 24 (across 7 site sections) |
-| Traffic sources | 9 (organic, CPC, social, referral, direct, email) |
-| Sessions | 8,000 (over 90 days) |
-| Events | ~590 (apply clicks, downloads, form starts, etc.) |
-| Campuses | 4 (Knight/Warwick, Flanagan/Lincoln, Liston/Providence, Newport) |
+| Entity          | Count                                                            |
+| --------------- | ---------------------------------------------------------------- |
+| Pages           | 24 (across 7 site sections)                                      |
+| Traffic sources | 9 (organic, CPC, social, referral, direct, email)                |
+| Sessions        | 8,000 (over 90 days)                                             |
+| Events          | ~590 (apply clicks, downloads, form starts, etc.)                |
+| Campuses        | 4 (Knight/Warwick, Flanagan/Lincoln, Liston/Providence, Newport) |
 
 Data distributions are weighted to reflect realistic higher ed web traffic patterns (Google organic dominant, mobile majority, admissions pages high-traffic).
 
@@ -174,4 +174,4 @@ Data distributions are weighted to reflect realistic higher ed web traffic patte
 
 ---
 
-*This is a portfolio/learning project. All data is synthetic.*
+_This is a portfolio/learning project. All data is synthetic._
