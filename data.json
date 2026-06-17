@@ -1,0 +1,278 @@
+{
+  "kpis": {
+    "total_sessions": 8000,
+    "avg_duration_sec": 183.0,
+    "bounce_rate_pct": 41.5,
+    "total_events": 592
+  },
+  "top_pages": [
+    {
+      "title": "Home",
+      "path": "/",
+      "section": "Home",
+      "sessions": 1157,
+      "bounce_rate_pct": 39.4
+    },
+    {
+      "title": "Admissions",
+      "path": "/admissions/",
+      "section": "Admissions",
+      "sessions": 733,
+      "bounce_rate_pct": 43.0
+    },
+    {
+      "title": "Apply Now",
+      "path": "/admissions/apply/",
+      "section": "Admissions",
+      "sessions": 629,
+      "bounce_rate_pct": 43.4
+    },
+    {
+      "title": "Financial Aid Overview",
+      "path": "/financial-aid/",
+      "section": "Financial Aid",
+      "sessions": 587,
+      "bounce_rate_pct": 41.9
+    },
+    {
+      "title": "Programs of Study",
+      "path": "/academics/programs/",
+      "section": "Academics",
+      "sessions": 510,
+      "bounce_rate_pct": 42.2
+    },
+    {
+      "title": "Nursing Program",
+      "path": "/academics/programs/nursing/",
+      "section": "Academics",
+      "sessions": 496,
+      "bounce_rate_pct": 41.3
+    },
+    {
+      "title": "Tuition & Fees",
+      "path": "/admissions/tuition/",
+      "section": "Admissions",
+      "sessions": 483,
+      "bounce_rate_pct": 46.0
+    },
+    {
+      "title": "FAFSA Information",
+      "path": "/financial-aid/fafsa/",
+      "section": "Financial Aid",
+      "sessions": 397,
+      "bounce_rate_pct": 40.8
+    }
+  ],
+  "sources": [
+    {
+      "source": "google",
+      "medium": "organic",
+      "sessions": 3074
+    },
+    {
+      "source": "direct",
+      "medium": "none",
+      "sessions": 1774
+    },
+    {
+      "source": "bing",
+      "medium": "organic",
+      "sessions": 835
+    },
+    {
+      "source": "google",
+      "medium": "cpc",
+      "sessions": 587
+    },
+    {
+      "source": "facebook",
+      "medium": "social",
+      "sessions": 580
+    },
+    {
+      "source": "ri.gov",
+      "medium": "referral",
+      "sessions": 407
+    },
+    {
+      "source": "niche.com",
+      "medium": "referral",
+      "sessions": 299
+    },
+    {
+      "source": "collegeboard",
+      "medium": "referral",
+      "sessions": 236
+    },
+    {
+      "source": "email",
+      "medium": "email",
+      "sessions": 208
+    }
+  ],
+  "devices": [
+    {
+      "device_type": "mobile",
+      "sessions": 3801
+    },
+    {
+      "device_type": "desktop",
+      "sessions": 3646
+    },
+    {
+      "device_type": "tablet",
+      "sessions": 553
+    }
+  ],
+  "campuses": [
+    {
+      "campus": "Knight",
+      "sessions": 2032,
+      "avg_duration_sec": 187.0
+    },
+    {
+      "campus": "Liston",
+      "sessions": 2020,
+      "avg_duration_sec": 181.0
+    },
+    {
+      "campus": "Newport",
+      "sessions": 1986,
+      "avg_duration_sec": 183.0
+    },
+    {
+      "campus": "Flanagan",
+      "sessions": 1962,
+      "avg_duration_sec": 182.0
+    }
+  ],
+  "weekly_trend": [
+    {
+      "week": "2026-W12",
+      "sessions": 417
+    },
+    {
+      "week": "2026-W13",
+      "sessions": 626
+    },
+    {
+      "week": "2026-W14",
+      "sessions": 626
+    },
+    {
+      "week": "2026-W15",
+      "sessions": 585
+    },
+    {
+      "week": "2026-W16",
+      "sessions": 626
+    },
+    {
+      "week": "2026-W17",
+      "sessions": 617
+    },
+    {
+      "week": "2026-W18",
+      "sessions": 595
+    },
+    {
+      "week": "2026-W19",
+      "sessions": 686
+    },
+    {
+      "week": "2026-W20",
+      "sessions": 627
+    },
+    {
+      "week": "2026-W21",
+      "sessions": 640
+    },
+    {
+      "week": "2026-W22",
+      "sessions": 589
+    },
+    {
+      "week": "2026-W23",
+      "sessions": 618
+    },
+    {
+      "week": "2026-W24",
+      "sessions": 257
+    }
+  ],
+  "events": [
+    {
+      "event_name": "apply_click",
+      "total_fires": 200
+    },
+    {
+      "event_name": "pdf_download",
+      "total_fires": 132
+    },
+    {
+      "event_name": "phone_click",
+      "total_fires": 54
+    },
+    {
+      "event_name": "form_start",
+      "total_fires": 41
+    },
+    {
+      "event_name": "external_link_click",
+      "total_fires": 41
+    },
+    {
+      "event_name": "info_request",
+      "total_fires": 35
+    },
+    {
+      "event_name": "appointment_click",
+      "total_fires": 33
+    },
+    {
+      "event_name": "map_click",
+      "total_fires": 32
+    },
+    {
+      "event_name": "email_click",
+      "total_fires": 24
+    }
+  ],
+  "sections": [
+    {
+      "section": "Academics",
+      "sessions": 2146,
+      "bounce_rate_pct": 41.1
+    },
+    {
+      "section": "Admissions",
+      "sessions": 1845,
+      "bounce_rate_pct": 43.9
+    },
+    {
+      "section": "Financial Aid",
+      "sessions": 1232,
+      "bounce_rate_pct": 40.8
+    },
+    {
+      "section": "Home",
+      "sessions": 1157,
+      "bounce_rate_pct": 39.4
+    },
+    {
+      "section": "About",
+      "sessions": 773,
+      "bounce_rate_pct": 40.5
+    },
+    {
+      "section": "Student Services",
+      "sessions": 694,
+      "bounce_rate_pct": 41.6
+    },
+    {
+      "section": "Workforce",
+      "sessions": 153,
+      "bounce_rate_pct": 41.8
+    }
+  ]
+}
