@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCRI Web Analytics Dashboard</title>
+<style>
+  :root {
+    --green:     #005834;
+    --green-mid: #007a49;
+    --green-lt:  #e8f4ee;
+    --green-pale:#f2f8f5;
+    --gold:      #c9a84c;
+    --text:      #1a1a1a;
+    --muted:     #5a6472;
+    --border:    #dde3e9;
+    --surface:   #f7f9fb;
+    --white:     #ffffff;
+    --radius:    10px;
+    --shadow:    0 1px 4px rgba(0,0,0,.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--green);
+    color: #fff;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 3px solid var(--gold);
+  }
+  header .logo {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  header .logo span { color: var(--gold); }
+  header .subtitle {
+    font-size: 13px;
+    opacity: .75;
+    margin-left: auto;
+  }
+
+  /* ── Layout ── */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+  }
+
+  h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section { margin-bottom: 36px; }
+
+  /* ── KPI Cards ── */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .kpi {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    border-top: 3px solid var(--green);
+  }
+  .kpi .label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: var(--green); line-height: 1; }
+  .kpi .sub   { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* ── Two-col grid ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+  /* ── Chart cards ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+  .chart-wrap { position: relative; width: 100%; }
+
+  /* ── Source table ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; font-weight: 600; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  td { padding: 8px 8px; border-bottom: 1px solid #f0f0f0; }
+  tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+  .badge-organic  { background: #e8f4ee; color: #005834; }
+  .badge-cpc      { background: #fff3e0; color: #b45309; }
+  .badge-social   { background: #eff6ff; color: #1d4ed8; }
+  .badge-referral { background: #fdf4ff; color: #7e22ce; }
+  .badge-direct   { background: #f3f4f6; color: #374151; }
+  .badge-email    { background: #fff1f2; color: #be123c; }
+
+  /* ── Bar rows ── */
+  .bar-row { margin-bottom: 10px; }
+  .bar-row .row-label { display: flex; justify-content: space-between; margin-bottom: 3px; font-size: 12px; }
+  .bar-row .row-label .name { color: var(--text); font-weight: 500; max-width: 65%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-row .row-label .val  { color: var(--muted); }
+  .bar-track { height: 7px; background: var(--green-lt); border-radius: 4px; }
+  .bar-fill  { height: 7px; background: var(--green); border-radius: 4px; transition: width .6s ease; }
+
+  /* ── Events list ── */
+  .event-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .event-item:last-child { border-bottom: none; }
+  .event-name { flex: 1; font-size: 13px; font-family: monospace; color: var(--green); }
+  .event-count { font-size: 13px; font-weight: 600; color: var(--text); }
+
+  /* ── Page table highlight ── */
+  tr.highlight td { background: var(--green-pale); }
+  .pct-bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .pct-bar { height: 5px; background: var(--green); border-radius: 3px; }
+
+  /* ── Footer ── */
+  footer { text-align: center; font-size: 12px; color: var(--muted); padding: 20px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="logo">CC<span>RI</span></div>
+    <div style="font-size:12px;opacity:.6;margin-top:2px;">Community College of Rhode Island</div>
+  </div>
+  <div style="margin-left:16px;border-left:1px solid rgba(255,255,255,.25);padding-left:16px;font-size:15px;font-weight:600;">
+    Web Analytics Dashboard
+  </div>
+  <div class="subtitle">Last 90 days · Sample data</div>
+</header>
+
+<main>
+
+  <!-- KPIs -->
+  <div class="section">
+    <h2>Overview</h2>
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="label">Total sessions</div>
+        <div class="value" id="kpi-sessions">—</div>
+        <div class="sub">Past 90 days</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Avg. session duration</div>
+        <div class="value" id="kpi-duration">—</div>
+        <div class="sub">minutes : seconds</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Bounce rate</div>
+        <div class="value" id="kpi-bounce">—</div>
+        <div class="sub">% single-page sessions</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Total events</div>
+        <div class="value" id="kpi-events">—</div>
+        <div class="sub">Clicks, downloads, forms</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly trend -->
+  <div class="section">
+    <h2>Weekly session trend</h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:220px;">
+        <canvas id="trendChart" role="img" aria-label="Line chart showing weekly sessions over 12 weeks">Weekly session counts.</canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top pages + Sources -->
+  <div class="section two-col">
+    <div class="card">
+      <h3>Top pages by sessions</h3>
+      <table>
+        <thead><tr><th>Page</th><th style="text-align:right">Sessions</th><th style="text-align:right">Bounce%</th></tr></thead>
+        <tbody id="pages-tbody"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Traffic sources</h3>
+      <table>
+        <thead><tr><th>Source</th><th>Medium</th><th style="text-align:right">Sessions</th></tr></thead>
+        <tbody id="sources-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Devices + Campus + Events -->
+  <div class="section three-col">
+    <div class="card">
+      <h3>Device type</h3>
+      <div class="chart-wrap" style="height:180px;">
+        <canvas id="deviceChart" role="img" aria-label="Doughnut chart of sessions by device type">Device breakdown.</canvas>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Sessions by campus</h3>
+      <div id="campus-bars" style="margin-top:8px;"></div>
+    </div>
+    <div class="card">
+      <h3>Top events</h3>
+      <div id="events-list"></div>
+    </div>
+  </div>
+
+  <!-- Section breakdown -->
+  <div class="section">
+    <h2>Site section breakdown</h2>
+    <div class="card">
+      <div class="chart-wrap" style="height:240px;">
+        <canvas id="sectionChart" role="img" aria-label="Horizontal bar chart of sessions by site section">Sessions per section.</canvas>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>CCRI Web Analytics Dashboard · Built with SQLite + Python · <a href="https://github.com" style="color:var(--green);">View on GitHub</a></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const GREEN      = '#005834';
+const GREEN_MID  = '#007a49';
+const GREEN_LT   = '#5aa87a';
+const GOLD       = '#c9a84c';
+const BLUE       = '#3266ad';
+const MUTED      = '#9ca3af';
+const BORDER     = '#e5e7eb';
+
+fetch('data.json')
+  .then(r => r.json())
+  .then(d => {
+    renderKPIs(d.kpis);
+    renderTrend(d.weekly_trend);
+    renderPages(d.top_pages);
+    renderSources(d.sources);
+    renderDevices(d.devices);
+    renderCampus(d.campuses);
+    renderEvents(d.events);
+    renderSections(d.sections);
+  });
+
+function fmtNum(n) { return n.toLocaleString(); }
+function fmtDur(sec) {
+  const m = Math.floor(sec / 60), s = Math.round(sec % 60);
+  return m + ':' + String(s).padStart(2,'0');
+}
+
+function renderKPIs(k) {
+  document.getElementById('kpi-sessions').textContent = fmtNum(k.total_sessions);
+  document.getElementById('kpi-duration').textContent = fmtDur(k.avg_duration_sec);
+  document.getElementById('kpi-bounce').textContent   = k.bounce_rate_pct + '%';
+  document.getElementById('kpi-events').textContent   = fmtNum(k.total_events);
+}
+
+function renderTrend(weeks) {
+  const labels = weeks.map(w => 'W' + w.week.split('-W')[1]);
+  const vals   = weeks.map(w => w.sessions);
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Sessions',
+        data: vals,
+        borderColor: GREEN,
+        backgroundColor: 'rgba(0,88,52,.08)',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointBackgroundColor: GREEN,
+        fill: true,
+        tension: 0.3,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: BORDER }, ticks: { color: MUTED, font: { size: 11 } } },
+        y: { grid: { color: BORDER }, ticks: { color: MUTED, font: { size: 11 } } }
+      }
+    }
+  });
+}
+
+function renderPages(pages) {
+  const max = pages[0].sessions;
+  const tbody = document.getElementById('pages-tbody');
+  pages.forEach((p, i) => {
+    const tr = document.createElement('tr');
+    if (i === 0) tr.className = 'highlight';
+    tr.innerHTML = `
+      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;">
+        <div style="font-weight:600;color:#111;">${p.title}</div>
+        <div style="color:#9ca3af;font-size:11px;">${p.path}</div>
+      </td>
+      <td style="text-align:right;font-weight:600;">${fmtNum(p.sessions)}</td>
+      <td style="text-align:right;color:${p.bounce_rate_pct > 50 ? '#b45309' : '#374151'};">${p.bounce_rate_pct}%</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+const MEDIUM_CLASS = { organic:'organic', cpc:'cpc', social:'social', referral:'referral', none:'direct', email:'email' };
+function renderSources(sources) {
+  const tbody = document.getElementById('sources-tbody');
+  sources.forEach(s => {
+    const cls = MEDIUM_CLASS[s.medium] || 'direct';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-weight:600;">${s.source}</td>
+      <td><span class="badge badge-${cls}">${s.medium}</span></td>
+      <td style="text-align:right;font-weight:600;">${fmtNum(s.sessions)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderDevices(devices) {
+  const total = devices.reduce((a,d) => a + d.sessions, 0);
+  const colors = [GREEN, GOLD, GREEN_LT];
+  const patterns = [null, null, null];
+  new Chart(document.getElementById('deviceChart'), {
+    type: 'doughnut',
+    data: {
+      labels: devices.map(d => d.device_type),
+      datasets: [{
+        data: devices.map(d => d.sessions),
+        backgroundColor: colors,
+        borderWidth: 2,
+        borderColor: '#fff',
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '65%',
+      plugins: {
+        legend: { display: true, position: 'bottom',
+          labels: { font: { size: 11 }, color: '#374151', padding: 12,
+            generateLabels(chart) {
+              return chart.data.labels.map((l,i) => ({
+                text: l + '  ' + Math.round(devices[i].sessions / total * 100) + '%',
+                fillStyle: colors[i],
+                strokeStyle: '#fff',
+                lineWidth: 1,
+                index: i,
+              }));
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+function renderCampus(campuses) {
+  const max = campuses[0].sessions;
+  const wrap = document.getElementById('campus-bars');
+  campuses.forEach(c => {
+    const pct = Math.round(c.sessions / max * 100);
+    wrap.innerHTML += `
+      <div class="bar-row">
+        <div class="row-label">
+          <span class="name">${c.campus} Campus</span>
+          <span class="val">${fmtNum(c.sessions)}</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+      </div>`;
+  });
+}
+
+function renderEvents(events) {
+  const max = events[0].total_fires;
+  const wrap = document.getElementById('events-list');
+  events.forEach(e => {
+    const div = document.createElement('div');
+    div.className = 'event-item';
+    div.innerHTML = `<span class="event-name">${e.event_name}</span><span class="event-count">${e.total_fires}</span>`;
+    wrap.appendChild(div);
+  });
+}
+
+function renderSections(sections) {
+  const labels = sections.map(s => s.section);
+  const vals   = sections.map(s => s.sessions);
+  new Chart(document.getElementById('sectionChart'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Sessions',
+        data: vals,
+        backgroundColor: [GREEN, GREEN_MID, GREEN_LT, GOLD, BLUE, '#9ca3af', '#d1d5db'],
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: MUTED, font: { size: 12 }, autoSkip: false }
+        },
+        y: {
+          grid: { color: BORDER },
+          ticks: { color: MUTED, font: { size: 11 } }
+        }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
